@@ -17,7 +17,7 @@ usage() {
 Usage:
     ${0##*/} [options]
 
-Start the container. The container will be removed upon exit.
+Enforce files formatting in the repository.
 
 Optional arguments:
     -d, --debug
@@ -50,24 +50,16 @@ parse_args() {
     done
 }
 
-build_container() {
-    podman build -f "$PROJECT_DIR/tools/developer/container/Dockerfile" -t codon:latest "$PROJECT_DIR/tools/developer"
-}
-
-enter_container() {
-    podman run \
-        -it \
-        --entrypoint "/bin/bash" \
-        --rm \
-        --volume "$PROJECT_DIR":"/workspace" \
-        --workdir "/workspace" \
-        "codon:latest"
+format_python() {
+    black "$PROJECT_DIR/src"
+    isort \
+        --profile "black" \
+        "$PROJECT_DIR/src"
 }
 
 main() {
     parse_args "$@"
-    build_container
-    enter_container
+    format_python
 }
 
 if [ "${BASH_SOURCE[0]}" == "$0" ]; then

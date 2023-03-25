@@ -1,0 +1,6 @@
+# Development dependencies
+black
+isort
+
+# Runtime dependencies
+click

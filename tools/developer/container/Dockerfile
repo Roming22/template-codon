@@ -1,6 +1,9 @@
 FROM docker.io/python:3.11
 
-RUN mkdir /workspace && \
-    /bin/bash -c "$(curl -fsSL https://exaloop.io/install.sh)"
+COPY dependencies /tmp/dependencies
 
-ENV PATH "~/.codon/bin:$PATH"
+RUN mkdir /workspace \
+    && pip install --user --requirement /tmp/dependencies/requirements.txt \
+    && /bin/bash -c "$(curl -fsSL https://exaloop.io/install.sh)"
+
+ENV PATH "~/.codon/bin:~/.local/bin:$PATH"
