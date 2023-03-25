@@ -51,10 +51,11 @@ parse_args() {
 }
 
 build() {
+    name="main"
     codon build \
         -release \
-        -exe "$PROJECT_DIR/src/main.py"
-    mv "$PROJECT_DIR/src/main" "$PROJECT_DIR/tools/developer/bin/myapp"
+        -exe "$PROJECT_DIR/src/$name.py"
+    mv "$PROJECT_DIR/src/$name" "$PROJECT_DIR/tools/developer/bin/$name"
 }
 
 main() {
